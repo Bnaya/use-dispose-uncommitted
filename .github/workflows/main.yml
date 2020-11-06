@@ -1,0 +1,49 @@
+name: General Validity
+
+on: ["push"]
+
+jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Lint
+        run: yarn lint
+        shell: bash
+
+  test:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node: [14]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: test + coverage
+        run: yarn test --coverage
+        shell: bash
+
+      - uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
+          verbose: true
+
+  build:
+    runs-on: ubuntu-18.04
+    needs: [lint, test]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: build
+        run: yarn build
+        shell: bash
