@@ -1,12 +1,8 @@
 {
   "name": "use-dispose-uncommitted",
   "version": "0.0.1",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
-  "publishConfig": {
-    "main": "dist/es5/index",
-    "module": "dist/esm/index"
-  },
+  "main": "dist/es5/index",
+  "module": "dist/esm/index",
   "repository": "git@github.com:Bnaya/use-dispose-uncommitted.git",
   "bugs": {
     "url": "https://github.com/Bnaya/use-dispose-uncommitted/issues"
@@ -54,7 +50,8 @@
     }
   },
   "files": [
-    "dist",
+    "dist/esm/**",
+    "dist/es5/**",
     "README.md"
   ]
 }

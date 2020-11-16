@@ -1,9 +1,9 @@
 # Warning ⚠️☣️ you probably don't need to use that
 For the vast majority of cases, use [useEffect](https://reactjs.org/docs/hooks-reference.html#useeffect), and the [cleanup function](https://reactjs.org/docs/hooks-reference.html#cleaning-up-an-effect) for side effects and cleanups, and KEEP YOUR RENDER FUNCTION PURE
 
-# Ah, still here? useDisposeUncommitted [WIP]
+# Ah, still here? useDisposeUncommitted
 
-useDisposeUncommitted is a React hook to help us cleanup side effects of uncommitted components.  
+useDisposeUncommitted is a tiny React hook to help us clean side effects of uncommitted components.  
 Based on similar implementation of [MobX's internal hook](https://github.com/mobxjs/mobx/blob/5d5eb89/packages/mobx-react-lite/src/utils/createReactionCleanupTrackingUsingFinalizationRegister.ts).  
 React discussion in this topic: [#15317 [Concurrent] Safely disposing uncommitted objects](https://github.com/facebook/react/issues/15317)
 
@@ -16,5 +16,90 @@ As long as we keep side-effects in `useEffects` it's not a problem, But lets tak
 In order to track access to observables, MobX must create the reaction on render phase.
 And in case this React will throw away tje component instance, we will not have a chance to dispose the Mobx reaction, which means memory leaks and possible bugs.
 
-## How - TBW
-[FinalizationRegistry](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry) on supported engines (chromium 84+, firefox 79+, node 14), or "legacy" using timer-based GC
+## Simple usage example
+Install the package `yarn add use-dispose-uncommitted`
+```js
+// default import also works
+import { useDisposeUncommitted } from "use-dispose-uncommitted";
+
+function MyComponent() {
+  useDisposeUncommitted(function disposer() {
+    console.log('Component disposed by React');
+  }, function reviver(revivedFromRenderBeforeCommit) {
+    if (revivedFromRenderBeforeCommit) {
+      console.log('Component speculatively disposed by us, but React suddenly re-rendered it');
+    } else {
+      console.log('Component speculatively disposed by us, but React suddenly mounted it');
+    }
+  });
+}
+```
+
+**Naive Mobx's useObserver impl:**
+```ts
+import { Reaction } from "mobx";
+function useObserver(jsxFactoryFunction) {
+  const [__, forceUpdateCounter] = useState(0);
+
+  function forceUpdate() {
+    forceUpdateCounter(c => c +1);
+  }
+
+  const reactionRef = useRef<Reaction>(null);
+  const mountingRef = useRef<{ changedBefore: boolean, isMounted: boolean }>({
+    changedBefore: false,
+    isMounted: false
+  });
+
+  function createReaction() {
+    reactionRef.current = new Reaction(() => {
+      if (mountingRef.isMounted) {
+        forceUpdate();
+      } else {
+        mountingRef.changedBefore = true;
+      }
+    });
+  }
+
+  useDisposeUncommitted(() => {
+    reactionRef.current.dispose();
+    reactionRef.current = null;
+  }, (revivedFromRenderBeforeCommit) => {
+    createReaction();
+  });
+
+  useLayoutEffect(() => {
+    if (mountingRef.changedBefore) {
+      forceUpdate();
+    }
+    mountingRef.isMounted = true;
+
+    return function unMountCleanup() {
+      reactionRef.current.dispose();
+      reactionRef.current = null;
+    }
+  }, []);
+
+  if (reactionRef.current === null) {
+    createReaction();
+  }
+}
+```
+
+
+## Implementation details
+### FinalizationRegistry
+On js engines that supports
+[FinalizationRegistry](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry) (chromium 84+, firefox 79+, node 14), we allocate React state without creating any external reference, and we register it for cleanup on FinalizationRegistry.  
+As only React have reference to that state object, we can tell that React have disposed the component when the cleanup callback is called for that state object.
+
+
+### Timer based GC
+For platform that does not support FinalizationRegistry, We take a speculative assumption that is a specific period of time have passed since render, but the component wasn't committed, we assume it was disposed by read.  
+That period of time is a hardcoded 10 seconds, none configurable, as in mobx impl.
+#### Component revival
+That speculation can bring us to a situation where we've ran our disposer, but React suddenly committing/re-rendering the component.  
+for that situation, we also have the reviver function that will run and signal that. 
+
+## Code Of Conduct (As MobX's)
+[Code Of Conduct](https://github.com/mobxjs/mobx/blob/main/CODE_OF_CONDUCT.md)
