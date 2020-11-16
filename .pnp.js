@@ -55,7 +55,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier-eslint", "npm:11.0.0"],
             ["react", "npm:17.0.1"],
             ["react-dom", "virtual:669db5b080bf2c3a9173d2d4fa99edccd87da447e2068df272470f01891d4143120e4df8f61de9b09632c838e9c97c2037945672fbdd908076318d525cfc0048#npm:17.0.1"],
-            ["ts-jest", "virtual:669db5b080bf2c3a9173d2d4fa99edccd87da447e2068df272470f01891d4143120e4df8f61de9b09632c838e9c97c2037945672fbdd908076318d525cfc0048#npm:26.4.3"],
+            ["ts-jest", "virtual:669db5b080bf2c3a9173d2d4fa99edccd87da447e2068df272470f01891d4143120e4df8f61de9b09632c838e9c97c2037945672fbdd908076318d525cfc0048#npm:26.4.4"],
             ["typescript", "patch:typescript@npm%3A4.0.5#builtin<compat/typescript>::version=4.0.5&hash=cc6730"]
           ],
           "linkType": "SOFT",
@@ -628,16 +628,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["rimraf", "npm:3.0.2"],
             ["slash", "npm:3.0.0"],
             ["strip-ansi", "npm:6.0.0"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["@jest/create-cache-key-function", [
-        ["npm:26.6.2", {
-          "packageLocation": "./.yarn/cache/@jest-create-cache-key-function-npm-26.6.2-e878523634-0cd38cdd03.zip/node_modules/@jest/create-cache-key-function/",
-          "packageDependencies": [
-            ["@jest/create-cache-key-function", "npm:26.6.2"],
-            ["@jest/types", "npm:26.6.2"]
           ],
           "linkType": "HARD",
         }]
@@ -7122,11 +7112,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["ts-jest", [
-        ["virtual:669db5b080bf2c3a9173d2d4fa99edccd87da447e2068df272470f01891d4143120e4df8f61de9b09632c838e9c97c2037945672fbdd908076318d525cfc0048#npm:26.4.3", {
-          "packageLocation": "./.yarn/$$virtual/ts-jest-virtual-54fec9a365/0/cache/ts-jest-npm-26.4.3-77cf762dd9-d9c2f802ec.zip/node_modules/ts-jest/",
+        ["virtual:669db5b080bf2c3a9173d2d4fa99edccd87da447e2068df272470f01891d4143120e4df8f61de9b09632c838e9c97c2037945672fbdd908076318d525cfc0048#npm:26.4.4", {
+          "packageLocation": "./.yarn/$$virtual/ts-jest-virtual-bc1ffdc67b/0/cache/ts-jest-npm-26.4.4-6fd34d9b91-bee46b789c.zip/node_modules/ts-jest/",
           "packageDependencies": [
-            ["ts-jest", "virtual:669db5b080bf2c3a9173d2d4fa99edccd87da447e2068df272470f01891d4143120e4df8f61de9b09632c838e9c97c2037945672fbdd908076318d525cfc0048#npm:26.4.3"],
-            ["@jest/create-cache-key-function", "npm:26.6.2"],
+            ["ts-jest", "virtual:669db5b080bf2c3a9173d2d4fa99edccd87da447e2068df272470f01891d4143120e4df8f61de9b09632c838e9c97c2037945672fbdd908076318d525cfc0048#npm:26.4.4"],
             ["@types/jest", "npm:26.0.15"],
             ["@types/typescript", null],
             ["bs-logger", "npm:0.2.6"],
@@ -7374,7 +7363,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier-eslint", "npm:11.0.0"],
             ["react", "npm:17.0.1"],
             ["react-dom", "virtual:669db5b080bf2c3a9173d2d4fa99edccd87da447e2068df272470f01891d4143120e4df8f61de9b09632c838e9c97c2037945672fbdd908076318d525cfc0048#npm:17.0.1"],
-            ["ts-jest", "virtual:669db5b080bf2c3a9173d2d4fa99edccd87da447e2068df272470f01891d4143120e4df8f61de9b09632c838e9c97c2037945672fbdd908076318d525cfc0048#npm:26.4.3"],
+            ["ts-jest", "virtual:669db5b080bf2c3a9173d2d4fa99edccd87da447e2068df272470f01891d4143120e4df8f61de9b09632c838e9c97c2037945672fbdd908076318d525cfc0048#npm:26.4.4"],
             ["typescript", "patch:typescript@npm%3A4.0.5#builtin<compat/typescript>::version=4.0.5&hash=cc6730"]
           ],
           "linkType": "SOFT",

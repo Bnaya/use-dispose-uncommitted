@@ -1,4 +1,4 @@
-dist
+/dist
 *.tgz
 .yarn/*
 !.yarn/cache
@@ -6,3 +6,4 @@ dist
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+/coverage
