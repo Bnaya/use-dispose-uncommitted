@@ -6,4 +6,5 @@
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+.yarn/install-state.gz
 /coverage

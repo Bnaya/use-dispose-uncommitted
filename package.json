@@ -14,7 +14,9 @@
   "author": "Bnaya Peretz <me@bnaya.net>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --build tsconfig.build-both.json"
+    "build": "tsc --build tsconfig.build-both.json",
+    "test": "jest",
+    "lint": "eslint 'src' '__tests__'"
   },
   "readme": "README.md",
   "devDependencies": {
@@ -24,6 +26,7 @@
     "@types/react": "^16.9.55",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
+    "codecov": "^3.8.1",
     "eslint": "^7.12.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
@@ -41,6 +44,14 @@
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.1"
+  },
+  "dependenciesMeta": {
+    "core-js": {
+      "built": false
+    },
+    "core-js-pure": {
+      "built": false
+    }
   },
   "files": [
     "dist",
