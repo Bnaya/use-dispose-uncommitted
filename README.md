@@ -9,6 +9,7 @@ Based on a similar implementation of [MobX's internal hook](https://github.com/m
 Relevant discussion in the React repo on this topic: [#15317 [Concurrent] Safely disposing uncommitted objects](https://github.com/facebook/react/issues/15317).
 
 ## When do we ever need that? - Explainer
+
 It is known that side effects in React should only be inside `useEffect` and that React will run them only when the component instance is actually being committed/mounted.  
 
 However, React may decide to throw away a component instance after rendering (for various reasons like suspense, strict mode, aborted renders), but before running `useEffect`, without letting us know by any means.
