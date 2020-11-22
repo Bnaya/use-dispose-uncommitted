@@ -9,13 +9,13 @@ Based on similar implementation of [MobX's internal hook](https://github.com/mob
 React discussion in this topic: [#15317 [Concurrent] Safely disposing uncommitted objects](https://github.com/facebook/react/issues/15317) 
 
 ## When do we ever need that? - Explainer
-It is know that, side effects in react should be only inside `useEffect`, and React will run them only when the component instance is actually being committed/mounted.  
+It is known that, side effects in react should be only inside `useEffect`, and React will run them only when the component instance is actually being committed/mounted.  
 
-React may (For various reasons: suspense, strick-mode, aborted-renders) decide to throw away component instance after render, but before running `useEffects`, without letting us know in any mean.
+React may (For various reasons: suspense, strict-mode, aborted-renders) decide to throw away component instance after render, but before running `useEffects`, without letting us know in any mean.
 
 As long as we keep side-effects in `useEffects` it's not a problem, But lets take MobX as example:  
 In order to track access to observables, MobX must create the reaction on render phase.
-And in case this React will throw away tje component instance, we will not have a chance to dispose the Mobx reaction, which means memory leaks and possible bugs.
+And in this case React will throw away the component instance, we will not have a chance to dispose the Mobx reaction, which means memory leaks and possible bugs.
 
 ## Simple usage example
 Install the package `yarn add use-dispose-uncommitted`
@@ -101,7 +101,7 @@ That period of time is a hard-coded 10 seconds, none configurable, as in mobx im
 That speculation can bring us to a situation where we've ran our disposer, but React suddenly committing/re-rendering the component.  
 for that situation, we also have the reviver function that will run and signal that. 
 
-### Not sure if it's a  good idea to use FinalizationRegistry for that? [Read this comment](https://github.com/facebook/react/issues/15317#issuecomment-722627311)
+### Not sure if it's a good idea to use FinalizationRegistry for that? [Read this comment](https://github.com/facebook/react/issues/15317#issuecomment-722627311)
 
 ## Testing, Running, Building.
 This project is using yarn 2 + pnp + zero install.  
